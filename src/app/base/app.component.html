@@ -1,8 +1,8 @@
-<!-- El encabezado solo aparece con el usuario LOGUEADO -->
-<nav class="main-nav blue large-text large-padding" *ngIf="afAuth.authState | async">
+<nav class="main-nav blue large-text large-padding">
     <a routerLink="/" class="nav-title">what to do</a>
 
-    <div class="float-right">
+    <!-- Botones solo con el usuario LOGUEADO -->
+    <div class="float-right" *ngIf="afAuth.authState | async">
         <a routerLink="/">
             <i class="small-font"></i>
             <span class="small-font">Mis listas</span>
