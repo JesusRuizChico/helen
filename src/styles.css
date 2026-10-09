@@ -4,7 +4,7 @@
 @import 'font-awesome/css/font-awesome.css';
 
 .large-padding {
-  float: 10 px 15 px;
+  padding: 10px 15px;
 }
 .float-right {
   float: right;
@@ -15,7 +15,7 @@
 }
 
 .main-nav{
-  margin-left: 1em;
+  overflow: hidden;
 }
 
 .main-nav a {
@@ -23,4 +23,58 @@
     color: white;
 }
 
+.main-nav .float-right a {
+    margin-left: 12px;
+}
 
+/* Contenido de cada pantalla */
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 20px 15px;
+}
+
+.text-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 15px;
+  border: none;
+  border-radius: 2px;
+  font-size: 1rem;
+}
+
+.primary-button {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 15px;
+  border: none;
+  border-radius: 2px;
+  background-color: #2196f3;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.primary-button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.lists {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.list-item {
+  padding: 12px 15px;
+  margin-bottom: 8px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+}

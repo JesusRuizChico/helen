@@ -1,0 +1,7 @@
+<form class="page" (ngSubmit)="save()">
+    <input class="text-input" type="text" name="name" [(ngModel)]="name" placeholder="Nombre de la lista" autocomplete="off">
+
+    <button type="submit" class="primary-button" [disabled]="saving || !name.trim()">
+        <i class="fa fa-floppy-o"></i> Guardar
+    </button>
+</form>
