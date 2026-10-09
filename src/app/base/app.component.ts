@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+import { AuthServices } from '../services/auth.services';
 
 @Component({
   selector: 'app-root',
@@ -8,12 +9,11 @@ import { Router } from '@angular/router';
   styles: []
 })
 export class AppComponent {
-  constructor( public afAuth: AngularFireAuth, private router: Router) {}
+  constructor( public afAuth: AngularFireAuth, private auth: AuthServices, private router: Router) {}
 
   logout(): void {
-    // Implement your logout logic here
-    this.afAuth.auth.signOut().then(() => {
-      this.router.navigate(['/']); // Redirect to login page after logout
+    this.auth.logout().then(() => {
+      this.router.navigate(['/login']); // Regresa a la pantalla de inicio (solo boton de login)
     });
   }
 }

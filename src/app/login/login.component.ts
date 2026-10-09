@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 import { AuthServices } from "../services/auth.services";
 
 @Component({
@@ -10,32 +11,23 @@ import { AuthServices } from "../services/auth.services";
 
 export class LoginComponent implements OnInit {
 
-    constructor(private auth: AuthServices) {}
+    constructor(private auth: AuthServices, private router: Router) {}
 
     ngOnInit(): void {
+        // Si ya hay sesion iniciada no tiene caso mostrar el login
         this.auth.getUser().subscribe(user => {
-            if (user) {
-                console.log('User is logged in:', user);
-            } else {
-                console.log('User is not logged in');
-            }
+            console.log('User is logged in:', user);
+            this.router.navigate(['/']);
         });
     }
 
-    login() {
-        this.auth.login().then(
-            () => {
-                console.log("click login");
-            }
-        );
-    }
-
     loginWithGoogle() {
-        return this.auth.login().then(
-            () => {
-                console.log("click loginWithGoogle");
+        return this.auth.login().then((loggedIn) => {
+            console.log("click loginWithGoogle");
+            if (loggedIn) {
+                this.router.navigate(['/']);
             }
-        );
+        });
     }
 
 }

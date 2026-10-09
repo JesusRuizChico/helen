@@ -37,7 +37,8 @@ export class AuthServices {
 
 
     
-    login(): Promise<void> {
+    // Resuelve true si el usuario inicio sesion, false si hubo error o cerro el popup
+    login(): Promise<boolean> {
         return this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider())
         .then((result) => {
             return this.userServices.add({
@@ -46,9 +47,15 @@ export class AuthServices {
                 name: result.user ? (result.user.displayName || '') : '',
             }).then(() => {
                 console.log('User added successfully');
+                return true;
             });
         }).catch((error) => {
             console.error('Error during login:', error);
+            return false;
         });
     }
-} 
+
+    logout(): Promise<void> {
+        return this.afAuth.auth.signOut();
+    }
+}
