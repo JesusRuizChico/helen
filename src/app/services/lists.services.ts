@@ -18,14 +18,17 @@ export class ListsServices {
         return `users/${uid}/lists`;
     }
 
-    add(name: string): Promise<void> {
+    // Resuelve con la lista guardada, incluyendo el id que le asigno Firestore
+    add(name: string): Promise<IList> {
         return this.afAuth.authState.pipe(take(1)).toPromise().then(user => {
             if (!user) {
                 throw new Error('No hay sesion iniciada');
             }
             const list: IList = { name: name, createdAt: Date.now() };
-            return this.afs.collection<IList>(this.path(user.uid)).add(list).then(() => {
-                console.log('List added successfully');
+            return this.afs.collection<IList>(this.path(user.uid)).add(list).then((ref) => {
+                const saved: IList = { id: ref.id, ...list };
+                console.log('Lista guardada en Firestore:', saved);
+                return saved;
             });
         });
     }
