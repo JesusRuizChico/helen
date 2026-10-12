@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
 
 import { ListsServices } from '../services/lists.services';
 import { IList } from '../structures/lists';
@@ -29,8 +28,6 @@ export class HomeComponent {
   public lists$: Observable<IList[]>;
 
   constructor(private lists: ListsServices) {
-    this.lists$ = this.lists.getAll().pipe(
-      tap(lists => console.log('Mis listas:', lists))
-    );
+    this.lists$ = this.lists.getAll();
   }
 }

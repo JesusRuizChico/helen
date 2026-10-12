@@ -27,7 +27,7 @@ export class ListsServices {
             const list: IList = { name: name, createdAt: Date.now() };
             return this.afs.collection<IList>(this.path(user.uid)).add(list).then((ref) => {
                 const saved: IList = { id: ref.id, ...list };
-                console.log('Lista guardada en Firestore:', saved);
+                console.log({ name: saved.name });
                 return saved;
             });
         });
