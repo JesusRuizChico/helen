@@ -16,11 +16,11 @@
     "Fabian Wiles <fabian.wiles@gmail.com>"
   ],
   "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "lint": "ng lint ng-universal-demo",
-    "build:client-and-server-bundles": "ng build --prod && ng run ng-universal-demo:server:production",
+    "ng": "node scripts/ng.js",
+    "start": "node scripts/ng.js serve",
+    "build": "node scripts/ng.js build",
+    "lint": "node scripts/ng.js lint ng-universal-demo",
+    "build:client-and-server-bundles": "node scripts/ng.js build --prod && node scripts/ng.js run ng-universal-demo:server:production",
     "build:prerender": "npm run build:client-and-server-bundles && npm run compile:server && npm run generate:prerender",
     "build:ssr": "npm run build:client-and-server-bundles && npm run compile:server",
     "compile:server": "tsc -p server.tsconfig.json",
