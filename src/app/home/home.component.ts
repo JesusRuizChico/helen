@@ -8,20 +8,20 @@ import { IList } from '../structures/lists';
   selector: 'app-home',
   template: `
     <div class="page">
-      <a routerLink="/new" class="primary-button">
-        <i class="fa fa-plus"></i> Nueva lista
-      </a>
-
       <ng-container *ngIf="lists$ | async as lists">
-        <ul class="lists" *ngIf="lists.length; else empty">
-          <li class="list-item" *ngFor="let list of lists">{{ list.name }}</li>
-        </ul>
+        <div class="cards" *ngIf="lists.length; else empty">
+          <app-list *ngFor="let list of lists" [list]="list"></app-list>
+        </div>
       </ng-container>
 
       <ng-template #empty>
-        <p>Todavía no tienes listas. Crea la primera con "Nueva lista".</p>
+        <p class="empty">Todavía no tienes listas. Crea la primera con el botón +.</p>
       </ng-template>
     </div>
+
+    <a routerLink="/new" class="fab" aria-label="Nueva lista" title="Nueva lista">
+      <i class="fa fa-plus"></i>
+    </a>
   `
 })
 export class HomeComponent {

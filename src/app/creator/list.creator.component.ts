@@ -11,19 +11,19 @@ import { ListsServices } from '../services/lists.services';
 
 export class ListCreatorComponent {
 
-    public name = '';
+    public title = '';
     public saving = false;
 
     constructor(private lists: ListsServices, private router: Router) {}
 
     save() {
-        const name = this.name.trim();
-        if (!name || this.saving) {
+        const title = this.title.trim();
+        if (!title || this.saving) {
             return;
         }
 
         this.saving = true;
-        this.lists.add(name).then(() => {
+        this.lists.add(title).then(() => {
             this.router.navigate(['/']); // Regresa a Mis listas
         }).catch((error) => {
             console.error('Error saving list:', error);

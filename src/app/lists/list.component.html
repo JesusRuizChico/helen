@@ -1,0 +1,4 @@
+<a class="card list-card" [routerLink]="['/lists', list.id]" (click)="open()">
+    <span class="list-card-title">{{ list.title || list.name }}</span>
+    <span class="badge" title="Tareas pendientes">{{ (pending$ | async) || 0 }}</span>
+</a>

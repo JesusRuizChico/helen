@@ -1,5 +1,16 @@
+/* Paleta de la app */
+:root {
+    --header: #1976d2;       /* encabezado */
+    --background: #2b2d4a;   /* fondo azul marino */
+    --card: #f0f0f2;         /* tarjetas */
+    --card-text: #2b2d4a;    /* texto dentro de las tarjetas */
+    --primary: #2196f3;      /* botones */
+    --badge: #ff5544;        /* circulo de pendientes */
+    --muted: #9a9cb8;        /* textos secundarios */
+}
+
 .blue{
-    background-color: #1976d2;
+    background-color: var(--header);
 }
 
 .lig-text{

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { firestore } from 'firebase/app';
+import 'firebase/firestore';
 import { Observable, of } from 'rxjs';
 import { switchMap, take } from 'rxjs/operators';
 
@@ -19,16 +21,15 @@ export class ListsServices {
     }
 
     // Resuelve con la lista guardada, incluyendo el id que le asigno Firestore
-    add(name: string): Promise<IList> {
+    add(title: string): Promise<IList> {
         return this.afAuth.authState.pipe(take(1)).toPromise().then(user => {
             if (!user) {
                 throw new Error('No hay sesion iniciada');
             }
-            const list: IList = { name: name, createdAt: Date.now() };
+            const list: IList = { title: title, createdAt: firestore.FieldValue.serverTimestamp() };
             return this.afs.collection<IList>(this.path(user.uid)).add(list).then((ref) => {
-                const saved: IList = { id: ref.id, ...list };
-                console.log({ name: saved.name });
-                return saved;
+                console.log({ title: title });
+                return { id: ref.id, title: title };
             });
         });
     }
@@ -36,9 +37,18 @@ export class ListsServices {
     getAll(): Observable<IList[]> {
         return this.afAuth.authState.pipe(
             switchMap(user => user
-                ? this.afs.collection<IList>(this.path(user.uid), ref => ref.orderBy('createdAt', 'desc'))
+                ? this.afs.collection<IList>(this.path(user.uid), ref => ref.orderBy('createdAt', 'asc'))
                     .valueChanges({ idField: 'id' })
                 : of([])
+            )
+        );
+    }
+
+    get(id: string): Observable<IList> {
+        return this.afAuth.authState.pipe(
+            switchMap(user => user
+                ? this.afs.doc<IList>(`${this.path(user.uid)}/${id}`).valueChanges()
+                : of(undefined)
             )
         );
     }

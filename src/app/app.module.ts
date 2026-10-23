@@ -15,6 +15,8 @@ import { router } from './routers';
 import { LoginComponent } from './login/login.component';
 import { RegistrerComponent } from './registrer/registrer.component'
 import { ListCreatorComponent } from './creator/list.creator.component';
+import { ListComponent } from './lists/list.component';
+import { ListDetailComponent } from './lists/list.detail.component';
 
 import { AuthServices } from './services/auth.services';
 
@@ -22,6 +24,7 @@ import { AuthGuards } from './guards/auth.guard.services';
 
 import { UserServices } from './services/user.services';
 import { ListsServices } from './services/lists.services';
+import { TodosServices } from './services/todos.services';
 
 @NgModule({
   declarations: [
@@ -29,7 +32,9 @@ import { ListsServices } from './services/lists.services';
     HomeComponent,
     LoginComponent,
     RegistrerComponent,
-    ListCreatorComponent
+    ListCreatorComponent,
+    ListComponent,
+    ListDetailComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'my-app' }),
@@ -41,7 +46,7 @@ import { ListsServices } from './services/lists.services';
     AngularFirestoreModule,
 
   ],
-  providers: [AuthServices, AuthGuards, UserServices, ListsServices],
+  providers: [AuthServices, AuthGuards, UserServices, ListsServices, TodosServices],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
