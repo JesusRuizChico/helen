@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, NgZone, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { AuthServices } from "../services/auth.services";
 
@@ -11,7 +11,7 @@ import { AuthServices } from "../services/auth.services";
 
 export class LoginComponent implements OnInit {
 
-    constructor(private auth: AuthServices, private router: Router) {}
+    constructor(private auth: AuthServices, private router: Router, private zone: NgZone) {}
 
     ngOnInit(): void {
         // Si ya hay sesion iniciada no tiene caso mostrar el login
@@ -25,7 +25,8 @@ export class LoginComponent implements OnInit {
         return this.auth.login().then((loggedIn) => {
             console.log("click loginWithGoogle");
             if (loggedIn) {
-                this.router.navigate(['/']);
+                // El popup de Google regresa fuera de la zona de Angular
+                this.zone.run(() => this.router.navigate(['/']));
             }
         });
     }

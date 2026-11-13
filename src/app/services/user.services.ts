@@ -14,7 +14,7 @@ export class UserServices {
 
 
     add(user: IUser): Promise<void> {
-        return this.usersCollection.doc(user.uid).set(user).catch(console.log);
+        return this.usersCollection.doc(user.uid).set(user);
 
     }
 }

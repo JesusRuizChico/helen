@@ -48,6 +48,10 @@ export class AuthServices {
             }).then(() => {
                 console.log('User added successfully');
                 return true;
+            }, (error) => {
+                // La sesion si se inicio aunque no se haya podido guardar el usuario
+                console.error('Error saving user:', error);
+                return true;
             });
         }).catch((error) => {
             console.error('Error during login:', error);
