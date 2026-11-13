@@ -39,13 +39,19 @@ export class TodosServices {
         );
     }
 
-    add(listId: string, title: string): Promise<void> {
+    add(listId: string, title: string, description: string = ''): Promise<void> {
         return this.uid().then(uid => {
-            const todo: ITodo = { title: title, done: false, createdAt: firestore.FieldValue.serverTimestamp() };
+            const todo: ITodo = { title: title, description: description, done: false, createdAt: firestore.FieldValue.serverTimestamp() };
             return this.afs.collection<ITodo>(this.path(uid, listId)).add(todo).then(() => {
-                console.log({ title: title });
+                console.log({ title: title, description: description });
             });
         });
+    }
+
+    complete(listId: string, todo: ITodo): Promise<void> {
+        return this.uid().then(uid =>
+            this.afs.doc<ITodo>(`${this.path(uid, listId)}/${todo.id}`).update({ done: true })
+        );
     }
 
     toggle(listId: string, todo: ITodo): Promise<void> {

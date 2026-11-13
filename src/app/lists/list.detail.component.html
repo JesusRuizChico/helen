@@ -1,31 +1,36 @@
 <div class="page">
-    <a routerLink="/" class="back-link"><i class="fa fa-arrow-left"></i> Mis listas</a>
+    <div class="detail-toolbar">
+        <a routerLink="/" class="back-link"><i class="fa fa-arrow-left"></i> Mis listas</a>
+        <button type="button" class="link-button" (click)="toggleForm()">
+            Agregar nuevo pendiente <i class="fa" [ngClass]="showForm ? 'fa-minus' : 'fa-plus'"></i>
+        </button>
+    </div>
 
     <h2 class="list-heading" *ngIf="list$ | async as list">{{ list.title || list.name }}</h2>
 
-    <form class="inline-form" (ngSubmit)="add()">
-        <input class="text-input" type="text" name="newTodo" [(ngModel)]="newTodo" placeholder="Nueva tarea" autocomplete="off">
+    <form class="todo-form" *ngIf="showForm" (ngSubmit)="add()">
+        <input #titleInput class="text-input" type="text" name="newTodo" [(ngModel)]="newTodo" placeholder="Que vas hacer?" autocomplete="off">
+        <textarea class="text-input" name="newDescription" [(ngModel)]="newDescription" rows="2" placeholder="Informacion adicional (opcional)"></textarea>
         <button type="submit" class="primary-button" [disabled]="!newTodo.trim()">
-            <i class="fa fa-plus"></i> Agregar
+            <i class="fa fa-floppy-o"></i> Guardar
         </button>
     </form>
 
-    <ng-container *ngIf="todos$ | async as todos">
+    <ng-container *ngIf="pending$ | async as todos">
         <ul class="cards" *ngIf="todos.length; else empty">
-            <li class="card todo" *ngFor="let todo of todos" [class.done]="todo.done">
-                <button type="button" class="icon-button check" (click)="toggle(todo)"
-                        [attr.aria-label]="todo.done ? 'Marcar como pendiente' : 'Marcar como hecha'">
-                    <i class="fa" [ngClass]="todo.done ? 'fa-check-circle' : 'fa-circle-o'"></i>
+            <li class="todo-row" *ngFor="let todo of todos">
+                <button type="button" class="card todo-card" (click)="complete(todo)" title="Clic para marcar como hecho">
+                    <span class="todo-title">{{ todo.title }}</span>
+                    <span class="todo-description" *ngIf="todo.description">{{ todo.description }}</span>
                 </button>
-                <span class="todo-title">{{ todo.title }}</span>
-                <button type="button" class="icon-button delete" (click)="remove(todo)" aria-label="Eliminar tarea">
-                    <i class="fa fa-trash"></i>
+                <button type="button" class="icon-button bell" (click)="complete(todo)" aria-label="Marcar como hecho" title="Marcar como hecho">
+                    <i class="fa fa-bell"></i>
                 </button>
             </li>
         </ul>
     </ng-container>
 
     <ng-template #empty>
-        <p class="empty">Esta lista no tiene tareas. Escribe una arriba y presiona "Agregar".</p>
+        <p class="empty">No tienes pendientes en esta lista.</p>
     </ng-template>
 </div>

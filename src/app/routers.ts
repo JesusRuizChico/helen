@@ -10,7 +10,8 @@ export const router = [
     { path: '', component: HomeComponent, pathMatch: 'full' ,canActivate: [AuthGuards]},
     { path: 'new', component: ListCreatorComponent, canActivate: [AuthGuards] },
     { path: 'home', component: ListCreatorComponent, canActivate: [AuthGuards] },
-    { path: 'lists/:id', component: ListDetailComponent, canActivate: [AuthGuards] },
+    { path: 'list/:id', component: ListDetailComponent, canActivate: [AuthGuards] },
+    { path: 'lists/:id', redirectTo: 'list/:id' },
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegistrerComponent }
 ]
